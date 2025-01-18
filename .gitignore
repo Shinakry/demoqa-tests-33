@@ -1,0 +1,13 @@
+HELP.md
+build/
+!**/src/main/**
+!**/src/test/**
+
+### Inte
+/.idea
+*.log
+
+.gradle
+
+### Logs ###
+*.log
