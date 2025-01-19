@@ -1,3 +1,5 @@
+package tests;
+
 import org.junit.jupiter.api.*;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -19,7 +21,7 @@ public class SimpleJUnitTest {
 
     @AfterAll
     static void afterAll(){
-        System.out.println("d### afterAll");
+        System.out.println("### afterAll");
     }
 
     @AfterEach
