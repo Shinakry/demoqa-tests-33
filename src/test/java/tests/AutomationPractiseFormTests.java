@@ -25,10 +25,12 @@ public class AutomationPractiseFormTests {
     @Test
     void allFormTest(){
         File uploadFile = new File("src/test/resources/photo_2024-01-11_13-55-58.jpg");
+        String nameStudent = new String("testFirstName");
+        String lastNameStudent = new String("testLastName");
 
         open("/automation-practice-form");
-        $("#firstName").setValue("testFirstName"); //заполнили имя
-        $("#lastName").setValue("testLastName"); //заполнили фамилию
+        $("#firstName").setValue(nameStudent); //заполнили имя
+        $("#lastName").setValue(lastNameStudent); //заполнили фамилию
         $("#userEmail").setValue("testUserEmail@test.ru"); //заполнили фамилию
         $(byText("Other")).click(); //пол
         $(".mr-sm-2.form-control#userNumber").setValue("8912251475"); //номер телефона
@@ -49,6 +51,31 @@ public class AutomationPractiseFormTests {
         $("#city").click(); //раскрытие списка по городам
         $("#react-select-4-option-0").click(); //выбор города из выпадающего списка
 
+        //отправка данных, получение результирующей таблицы
+        $("#submit").click();
 
+        //проверка наличия всех полей в результирующей таблице
+        $(".modal-content").shouldHave(text("testFirstName testLastName"));
+        $(".modal-content").shouldHave(text("Student Email"));
+        $(".modal-content").shouldHave(text("Gender"));
+        $(".modal-content").shouldHave(text("Mobile"));
+        $(".modal-content").shouldHave(text("Date of Birth"));
+        $(".modal-content").shouldHave(text("Subjects"));
+        $(".modal-content").shouldHave(text("Hobbies"));
+        $(".modal-content").shouldHave(text("Picture"));
+        $(".modal-content").shouldHave(text("Address"));
+        $(".modal-content").shouldHave(text("State and City"));
+
+        //проверка корректности наполнения полей в результирующей таблице
+        $(".modal-content").shouldHave(text(nameStudent + (" ") + lastNameStudent));
+        $(".modal-content").shouldHave(text("testUserEmail@test.ru"));
+        $(".modal-content").shouldHave(text("Other"));
+        $(".modal-content").shouldHave(text("8912251475"));
+        $(".modal-content").shouldHave(text("12 April,1939"));
+        $(".modal-content").shouldHave(text("Chemistry"));
+        $(".modal-content").shouldHave(text("Sports, Reading, Music"));
+        $(".modal-content").shouldHave(text("photo_2024-01-11_13-55-58.jpg"));
+        $(".modal-content").shouldHave(text("currentAddressTest"));
+        $(".modal-content").shouldHave(text("Rajasthan Jaipur"));
     }
 }
