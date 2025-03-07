@@ -29,76 +29,81 @@ public class RegistrationPage {
     CalendarComponent calendarComponent = new CalendarComponent();
 
 
-    public RegistrationPage openPage(){
+    public RegistrationPage openPage() {
         open("/automation-practice-form");
+
+        return this;
+    }
+
+    public RegistrationPage removeAdBanner() {
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
 
         return this;
     }
 
-    public RegistrationPage setFirstName(String value){
+    public RegistrationPage setFirstName(String value) {
         firstNameInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setLastName(String value){
+    public RegistrationPage setLastName(String value) {
         lastNameInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setEmail(String value){
+    public RegistrationPage setEmail(String value) {
         emailInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setGender(String value){
+    public RegistrationPage setGender(String value) {
         genterWrapper.$(byText(value)).click();
 
         return this;
     }
 
-    public RegistrationPage setUserNumber(String value){
+    public RegistrationPage setUserNumber(String value) {
         userNumberInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setDateOfBirth(String day, String month, String year){
+    public RegistrationPage setDateOfBirth(String day, String month, String year) {
         calendarComponentChoose.click();
         calendarComponent.setDate(day, month, year);
 
         return this;
     }
 
-    public RegistrationPage setSubjects(String subject){
+    public RegistrationPage setSubjects(String subject) {
         subjectsInput.setValue(subject).pressEnter();
 
         return this;
     }
 
-    public RegistrationPage setHobbies(String hobby){
+    public RegistrationPage setHobbies(String hobby) {
         hobbiesInput.$(byText(hobby)).click();
 
         return this;
     }
 
-    public RegistrationPage setPicture(String path){
+    public RegistrationPage setPicture(String path) {
         pictureInput.uploadFromClasspath(path);
 
         return this;
     }
 
-    public RegistrationPage setCurrentAddress(String address){
+    public RegistrationPage setCurrentAddress(String address) {
         currentAddressInput.setValue(address);
 
         return this;
     }
 
-    public RegistrationPage setStateAndCity(String state, String city){
+    public RegistrationPage setStateAndCity(String state, String city) {
         stateInput.scrollTo().click();
         stateInput.$(byText(state)).click();
         cityInput.click();
@@ -107,19 +112,19 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage submitButtonClick(){
+    public RegistrationPage submitButtonClick() {
         submitButton.click();
 
         return this;
     }
 
-    public RegistrationPage userFormValidate(){
+    public RegistrationPage userFormValidate() {
         userFormInput.shouldHave(attribute("class", "was-validated"));
 
         return this;
     }
 
-    public RegistrationPage checkResult(String key, String value){
+    public RegistrationPage checkResult(String key, String value) {
         $(".modal-content").shouldHave(text(key)).parent()
                 .shouldHave(text(value));
 
