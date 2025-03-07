@@ -12,7 +12,7 @@ import java.util.Locale;
 public class AutomationPractiseFormGenerateData {
 
     @BeforeAll
-    static void openBrowserBeforeAll() {
+    static void configBrowserBeforeAll() {
         Configuration.browserSize = "1920x1080";
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
@@ -27,7 +27,7 @@ public class AutomationPractiseFormGenerateData {
             currentAddress, state, city;
 
     @Test
-    void allFormTest(){
+    void fullFieldsFillerTest() {
 
         firstName = faker.name().firstName();
         lastName = faker.name().lastName();
@@ -39,54 +39,71 @@ public class AutomationPractiseFormGenerateData {
         dayOfBirth = RandomUtil.getRandomDay();
         monthOfBirth = RandomUtil.getRandomMonth();
         yearOfBirth = RandomUtil.getRandomYear();
+        gender = RandomUtil.getRandomGender();
+        hobbies = RandomUtil.getRandomHobbie();
+
+        subjects = "Math";
+        pictures = "photo_2024-01-11_13-55-58.jpg";
+        state = "NCR";
+        city = "Delhi";
+
 
         registrationPage.openPage()
-            .setFirstName(firstName)
-            .setLastName(lastName)
-            .setEmail(email)
-            .setGender("Other")
-            .setUserNumber(userNumber)
-            .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
-            .setSubjects("Math")
-            .setHobbies("Sports")
-            .setPicture("photo_2024-01-11_13-55-58.jpg")
-            .setCurrentAddress(currentAddress)
-            .setStateAndCity("NCR", "Delhi");
+                .removeAdBanner()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setEmail(email)
+                .setGender(gender)
+                .setUserNumber(userNumber)
+                .setDateOfBirth(dayOfBirth, monthOfBirth, yearOfBirth)
+                .setSubjects(subjects)
+                .setHobbies(hobbies)
+                .setPicture(pictures)
+                .setCurrentAddress(currentAddress)
+                .setStateAndCity(state, city);
 
         registrationPage.submitButtonClick();
 
         registrationPage.checkResult("Student Name", firstName + " " + lastName)
-                        .checkResult("Student Email", email)
-                        .checkResult("Gender", "Other")
-                        .checkResult("Mobile", userNumber)
-                        .checkResult("Date of Birth", dayOfBirth + " " + monthOfBirth + "," + yearOfBirth)
-                        .checkResult("Subjects", "Math")
-                        .checkResult("Hobbies", "Sports")
-                        .checkResult("Picture", "photo_2024-01-11_13-55-58.jpg")
-                        .checkResult("Address", currentAddress)
-                        .checkResult("State and City", "NCR Delhi");
+                .checkResult("Student Email", email)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", userNumber)
+                .checkResult("Date of Birth", dayOfBirth + " " + monthOfBirth + "," + yearOfBirth)
+                .checkResult("Subjects", subjects)
+                .checkResult("Hobbies", hobbies)
+                .checkResult("Picture", pictures)
+                .checkResult("Address", currentAddress)
+                .checkResult("State and City", state + " " + city);
     }
 
     @Test
     void minFormTest() {
 
+        firstName = faker.name().firstName();
+        lastName = faker.name().lastName();
+        userNumber = faker.phoneNumber().subscriberNumber(10);
+
+        gender = RandomUtil.getRandomGender();
+
         registrationPage.openPage()
-                .setFirstName("Alex")
-                .setLastName("Pampushkin")
-                .setGender("Other")
-                .setUserNumber("8912251475");
+                .removeAdBanner()
+                .setFirstName(firstName)
+                .setLastName(lastName)
+                .setGender(gender)
+                .setUserNumber(userNumber);
 
         registrationPage.submitButtonClick();
 
-        registrationPage.checkResult("Student Name", "Alex Pampushkin")
-                .checkResult("Gender", "Other")
-                .checkResult("Mobile", "8912251475");
+        registrationPage.checkResult("Student Name", firstName + " " + lastName)
+                .checkResult("Gender", gender)
+                .checkResult("Mobile", userNumber);
 
     }
 
     @Test
-    void negativeEmptyFormTest(){
+    void negativeEmptyFormTest() {
         registrationPage.openPage()
+                .removeAdBanner()
                 .submitButtonClick()
                 .userFormValidate();
     }

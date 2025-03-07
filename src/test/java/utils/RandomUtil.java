@@ -40,5 +40,17 @@ public class RandomUtil {
         return String.format("%s", getRandomInt(1900,2024));
     }
 
+    public static String getRandomGender(){
+        String[] genders = {"Male", "Female", "Other"};
+
+        return getRandomItemFromArray(genders);
+    }
+
+    public static String getRandomHobbie(){
+        String[] hobbies = {"Sports", "Reading", "Music"};
+
+        return getRandomItemFromArray(hobbies);
+    }
+
 
 }
